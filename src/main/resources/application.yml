@@ -30,3 +30,8 @@ spring:
 logging:
   level:
     org.springframework.ai.chat.advisors: DEBUG
+
+frog:
+  weather:
+    api-key: ${frog.weather.api-key}
+    api-host: ${frog.weather.api-host}
