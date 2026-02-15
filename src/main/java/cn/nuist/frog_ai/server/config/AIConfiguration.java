@@ -2,6 +2,7 @@ package cn.nuist.frog_ai.server.config;
 
 import cn.nuist.frog_ai.common.constant.AiBaseConstant;
 import cn.nuist.frog_ai.server.tools.WeatherInquiryTools;
+import cn.nuist.frog_ai.server.tools.WikiTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
@@ -19,6 +20,8 @@ public class AIConfiguration {
     private VectorStore vectorStore;
     @Autowired
     private WeatherInquiryTools weatherInquiryTools;
+    @Autowired
+    private WikiTools wikiTools;
 
 
     @Bean
@@ -33,7 +36,7 @@ public class AIConfiguration {
                                         .topK(1)
                                         .build())
                                 .build())
-                .defaultTools(weatherInquiryTools)
+                .defaultTools(weatherInquiryTools, wikiTools)
                 .build();
     }
 }

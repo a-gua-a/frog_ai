@@ -36,7 +36,7 @@ public class AIController {
 
     @PostMapping("/loadDocument")
     public void loadDocument(){
-        Resource resource = new FileSystemResource("src/main/resources/document/test.txt");
+        Resource resource = new FileSystemResource("src/main/resources/document/序章.txt");
         TextReader reader = new TextReader(resource);
         List<Document> documentList = reader.read();
         vectorStore.add(documentList);
