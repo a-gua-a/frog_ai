@@ -4,8 +4,12 @@ import cn.nuist.frog_ai.common.constant.AiBaseConstant;
 import cn.nuist.frog_ai.server.tools.WeatherInquiryTools;
 import cn.nuist.frog_ai.server.tools.WikiTools;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.MessageWindowChatMemory;
+import org.springframework.ai.chat.memory.repository.jdbc.JdbcChatMemoryRepository;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -22,10 +26,18 @@ public class AIConfiguration {
     private WeatherInquiryTools weatherInquiryTools;
     @Autowired
     private WikiTools wikiTools;
+    @Autowired
+    private JdbcChatMemoryRepository jdbcChatMemoryRepository;
 
 
     @Bean
     public ChatClient chatClient(OpenAiChatModel openAiChatModel) {
+
+        ChatMemory chatMemory = MessageWindowChatMemory.builder()
+                .chatMemoryRepository(jdbcChatMemoryRepository)
+                .maxMessages(20)
+                .build();
+        
         return ChatClient.builder(openAiChatModel)
                 .defaultSystem(AiBaseConstant.baseRoleDescription)
                 .defaultAdvisors(
@@ -35,7 +47,9 @@ public class AIConfiguration {
                                         .similarityThreshold(0.5)
                                         .topK(1)
                                         .build())
-                                .build())
+                                .build(),
+                        MessageChatMemoryAdvisor.builder(chatMemory).build()
+                )
                 .defaultTools(weatherInquiryTools, wikiTools)
                 .build();
     }

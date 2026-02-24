@@ -6,6 +6,12 @@ spring:
     name: frog_ai
   profiles:
     active: dev
+  datasource:
+    druid:
+      driver-class-name: ${frog.datasource.driver-class-name}
+      url: jdbc:mysql://${frog.datasource.host}:${frog.datasource.port}/${frog.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${frog.datasource.username}
+      password: ${frog.datasource.password}
   ai:
     openai:
       api-key: ${frog.ai.openai.api-key}
@@ -21,11 +27,23 @@ spring:
         initialize-schema: true # 是否初始化向量库索引结构
         prefix: "doc:"
         index-name: frog_ai_index
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
   data:
     redis:
       host: localhost
       port: 6379
 
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.frog.pojo.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
 
 logging:
   level:
@@ -35,3 +53,10 @@ frog:
   weather:
     api-key: ${frog.weather.api-key}
     api-host: ${frog.weather.api-host}
+  ai:
+    speech:
+      model: ${frog.ai.speech.model}  # qwen3-tts-vc-2026-01-22
+  jwt:
+    user-secret-key: frogForLuciaqwertyuiopasdfghjklzxcvbnmqwerty
+    user-ttl: 7200000
+    user-token-name: authentication

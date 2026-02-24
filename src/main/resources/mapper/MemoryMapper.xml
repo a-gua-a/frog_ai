@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.nuist.frog_ai.server.mapper.MemoryMapper">
+    <select id="getByConversationId" resultType="java.util.Map">
+        select * from spring_ai_chat_memory where conversation_id = #{conversationId}
+    </select>
+
+</mapper>
