@@ -48,10 +48,10 @@ public class AIController {
 
 
     /**
-     * 返回文本、流式返回语音
+     * 返回文本、流式返回语音，暂无免费语音复刻模型支持，停用。
      */
     @CrossOrigin(exposedHeaders = "responseText")
-    @PostMapping("/audio")
+    //@PostMapping("/audio")
     public StreamingResponseBody text2Audio(@RequestBody Map<String, String> request, HttpServletResponse response) {
         String message = request.get("message");
         String conversationId = request.get("conversationId");
