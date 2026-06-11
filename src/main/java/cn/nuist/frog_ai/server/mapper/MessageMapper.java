@@ -9,13 +9,15 @@ import java.util.List;
 @Mapper
 public interface MessageMapper {
 
-    @Select("select * from message where user_id = #{userId}")
+    @Select("select * from message where user_id = #{userId} and is_delete = 0")
     List<Message> selectByUserId(Integer userId);
 
-    @Select("select * from message where id = #{id}")
+    @Select("select * from message where id = #{id} and is_delete = 0")
     Message getById(Integer id);
 
     void insert(Message message);
 
     void updateById(Message message);
+
+    void deleteByConversationId(Integer id);
 }

@@ -12,7 +12,12 @@
     <update id="updateById">
         update message
         set description = #{description}
-        where id = #{id}
+        where id = #{id} and is_delete = 0
     </update>
 
+    <!-- 删除消息 -->
+    <delete id="deleteByConversationId">
+        delete from message
+        where id = #{id} and is_delete = 0
+    </delete>
 </mapper>

@@ -83,4 +83,10 @@ public class MessageServiceImpl implements MessageService {
         message.setDescription(description);
         messageMapper.updateById(message);
     }
+
+    @Override
+    public void deleteChat(String id) {
+        Integer messageId = Integer.parseInt(id);
+        messageMapper.deleteByConversationId(messageId);
+    }
 }

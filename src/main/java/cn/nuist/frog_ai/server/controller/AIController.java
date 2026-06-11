@@ -149,6 +149,21 @@ public class AIController {
         return true;
     }
 
+    /**
+     * 删除聊天记录
+     */
+    @CrossOrigin
+    @DeleteMapping("/deleteChat")
+    public boolean deleteChat(@RequestBody Map<String, String> request){
+        try{
+            messageService.deleteChat(request.get("id"));
+        }catch (Exception e){
+            log.error("删除聊天失败", e);
+            return false;
+        }
+        return true;
+    }
+
     @PostMapping("/loadDocument")
     public void loadDocument(){
         Resource resource = new FileSystemResource("src/main/resources/document/序章.txt");

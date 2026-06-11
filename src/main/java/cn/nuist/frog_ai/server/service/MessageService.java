@@ -14,4 +14,6 @@ public interface MessageService {
     ConversationDetailVO getDetail(String conversationId, Integer messageId);
 
     void updateDescription(Integer id, String description);
+
+    void deleteChat(String id);
 }
