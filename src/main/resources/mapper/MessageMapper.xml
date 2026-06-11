@@ -15,9 +15,10 @@
         where id = #{id} and is_delete = 0
     </update>
 
-    <!-- 删除消息 -->
-    <delete id="deleteByConversationId">
-        delete from message
+    <!-- 逻辑删除消息 -->
+    <update id="deleteByConversationId">
+        update message
+        set is_delete = 1
         where id = #{id} and is_delete = 0
-    </delete>
+    </update>
 </mapper>
