@@ -31,6 +31,7 @@ public class WikiServiceImpl implements WikiService {
                     .GET()
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            log.info("关键词查询返回值：{}", response.body());
             WikiSearchResponse wikiSearchResponse = JsonUtils.fromJson(response.body(), WikiSearchResponse.class);
             return wikiSearchResponse;
         } catch (Exception e) {
