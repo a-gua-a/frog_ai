@@ -1,6 +1,7 @@
 package cn.nuist.frog_ai.server.config;
 
 import cn.nuist.frog_ai.common.constant.AiBaseConstant;
+import cn.nuist.frog_ai.server.tools.FileTools;
 import cn.nuist.frog_ai.server.tools.WeatherInquiryTools;
 import cn.nuist.frog_ai.server.tools.WikiTools;
 import org.springframework.ai.chat.client.ChatClient;
@@ -27,6 +28,8 @@ public class AIConfiguration {
     @Autowired
     private WikiTools wikiTools;
     @Autowired
+    private FileTools fileTools;
+    @Autowired
     private JdbcChatMemoryRepository jdbcChatMemoryRepository;
 
 
@@ -50,7 +53,7 @@ public class AIConfiguration {
                                 .build(),
                         MessageChatMemoryAdvisor.builder(chatMemory).build()
                 )
-                .defaultTools(weatherInquiryTools, wikiTools)
+                .defaultTools(weatherInquiryTools, wikiTools, fileTools)
                 .build();
     }
 }

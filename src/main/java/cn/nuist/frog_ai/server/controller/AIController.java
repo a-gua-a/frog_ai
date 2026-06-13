@@ -1,6 +1,8 @@
 package cn.nuist.frog_ai.server.controller;
 
 import cn.nuist.frog_ai.common.context.BaseContext;
+import cn.nuist.frog_ai.pojo.Result.Result;
+import cn.nuist.frog_ai.pojo.dto.FileChatDTO;
 import cn.nuist.frog_ai.pojo.entity.Message;
 import cn.nuist.frog_ai.pojo.vo.ConversationDetailVO;
 import cn.nuist.frog_ai.server.service.AIAudioSpeechService;
@@ -46,6 +48,12 @@ public class AIController {
         return aiChatService.chat(message, conversationId);
     }
 
+    @CrossOrigin
+    @PostMapping("/chatWithFile")
+    public Result chatWithFile(@RequestBody FileChatDTO request) {
+        String text = aiChatService.chatWithFile(request);
+        return Result.success(text);
+    }
 
     /**
      * 返回文本、流式返回语音，暂无免费语音复刻模型支持，停用。
