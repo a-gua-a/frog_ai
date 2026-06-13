@@ -23,7 +23,7 @@ public class LoginController {
     JWTProperties jwtProperties;
 
     @CrossOrigin
-    @GetMapping("/login")
+    @GetMapping(value = "/login",produces = "text/plain;charset=UTF-8")
     public String login(String username, String password) {
         User user = null;
         log.info("用户名:{}",username);

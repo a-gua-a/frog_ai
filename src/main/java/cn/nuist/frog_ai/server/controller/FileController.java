@@ -21,7 +21,7 @@ public class FileController {
     /**
      * 上传文件
      */
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload",produces = "application/json;charset=UTF-8")
     public FileUploadVO upload(@RequestParam("file") MultipartFile file) {
         return fileService.upload(file);
     }

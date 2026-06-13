@@ -41,7 +41,7 @@ public class AIController {
     private MessageService messageService;
 
     @CrossOrigin
-    @PostMapping("/chat")
+    @PostMapping(value = "/chat",produces = "text/plain;charset=UTF-8")
     public String chat(@RequestBody Map<String, String> request) {
         String message = request.get("message");
         String conversationId = request.get("conversationId");
@@ -59,7 +59,7 @@ public class AIController {
      * 返回文本、流式返回语音，暂无免费语音复刻模型支持，停用。
      */
     @CrossOrigin(exposedHeaders = "responseText")
-    @PostMapping("/audio")
+    @PostMapping(value = "/audio",produces = "text/plain;charset=UTF-8")
     public StreamingResponseBody text2Audio(@RequestBody Map<String, String> request, HttpServletResponse response) {
         String message = request.get("message");
         String conversationId = request.get("conversationId");
@@ -97,7 +97,7 @@ public class AIController {
      * 查询历史聊天记录
      */
     @CrossOrigin
-    @GetMapping("/history")
+    @GetMapping(value = "/history",produces = "application/json;charset=UTF-8")
     public List<Message> getMessageList(){
         log.info("查询用户{}的聊天记录", BaseContext.getCurrentId());
         Integer userId = BaseContext.getCurrentId();
@@ -110,7 +110,7 @@ public class AIController {
      * 查询历史聊天细节
      */
     @CrossOrigin
-    @PostMapping("/detail")
+    @PostMapping(value = "/detail",produces = "application/json;charset=UTF-8")
     public ConversationDetailVO detail(@RequestBody Map<String, String> request) {
         String conversationId = request.get("conversationId");
         Integer id = Integer.valueOf(request.get("id"));
@@ -126,7 +126,7 @@ public class AIController {
     * 新增聊天
     */
     @CrossOrigin
-    @PostMapping("/addChat")
+    @PostMapping(value = "/addChat",produces = "text/plain;charset=UTF-8")
     public boolean addChat(@RequestBody Map<String, String> request){
         String conversationId = request.get("conversationId");
         String description = request.get("description");
@@ -143,7 +143,7 @@ public class AIController {
      * 更改聊天记录备注
      */
     @CrossOrigin
-    @PutMapping("/updateChat")
+    @PutMapping(value = "/updateChat",produces = "text/plain;charset=UTF-8")
     public boolean updateChat(@RequestBody Map<String, String> request){
         log.info("更新聊天记录备注,id={},description={}",request.get("id"),request.get("description"));
         Integer id = Integer.valueOf(request.get("id"));
@@ -161,7 +161,7 @@ public class AIController {
      * 删除聊天记录
      */
     @CrossOrigin
-    @DeleteMapping("/deleteChat")
+    @DeleteMapping(value = "/deleteChat",produces = "text/plain;charset=UTF-8")
     public boolean deleteChat(@RequestBody Map<String, String> request){
         try{
             messageService.deleteChat(request.get("id"));
@@ -172,7 +172,7 @@ public class AIController {
         return true;
     }
 
-    @PostMapping("/loadDocument")
+    @PostMapping(value = "/loadDocument",produces = "text/plain;charset=UTF-8")
     public void loadDocument(){
         Resource resource = new FileSystemResource("src/main/resources/document/序章.txt");
         TextReader reader = new TextReader(resource);
@@ -181,7 +181,7 @@ public class AIController {
     }
 
     //测试创建语音
-    @PostMapping("/createVoice")
+    @PostMapping(value = "/createVoice",produces = "text/plain;charset=UTF-8")
     public void createVoice(@RequestBody Map<String, String> request) {
         String text = request.get("text");
         try {
