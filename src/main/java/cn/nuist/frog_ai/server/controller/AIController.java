@@ -126,25 +126,25 @@ public class AIController {
     * 新增聊天
     */
     @CrossOrigin
-    @PostMapping(value = "/addChat",produces = "text/plain;charset=UTF-8")
-    public boolean addChat(@RequestBody Map<String, String> request){
+    @PostMapping(value = "/addChat",produces = "application/json;charset=UTF-8")
+    public Result addChat(@RequestBody Map<String, String> request){
         String conversationId = request.get("conversationId");
         String description = request.get("description");
         try {
             messageService.addMessage(conversationId,description);
         } catch (Exception e) {
             log.error("添加聊天失败", e);
-            return false;
+            return Result.error("添加聊天失败",false);
         }
-        return true;
+        return Result.success(true);
     }
 
     /**
      * 更改聊天记录备注
      */
     @CrossOrigin
-    @PutMapping(value = "/updateChat",produces = "text/plain;charset=UTF-8")
-    public boolean updateChat(@RequestBody Map<String, String> request){
+    @PutMapping(value = "/updateChat",produces = "application/json;charset=UTF-8")
+    public Result updateChat(@RequestBody Map<String, String> request){
         log.info("更新聊天记录备注,id={},description={}",request.get("id"),request.get("description"));
         Integer id = Integer.valueOf(request.get("id"));
         String description = request.get("description");
@@ -152,24 +152,24 @@ public class AIController {
             messageService.updateDescription(id, description);
         } catch (Exception e) {
             log.error("更新聊天失败", e);
-            return false;
+            return Result.error("更新聊天失败",false);
         }
-        return true;
+        return Result.success(true);
     }
 
     /**
      * 删除聊天记录
      */
     @CrossOrigin
-    @DeleteMapping(value = "/deleteChat",produces = "text/plain;charset=UTF-8")
-    public boolean deleteChat(@RequestBody Map<String, String> request){
+    @DeleteMapping(value = "/deleteChat",produces = "application/json;charset=UTF-8")
+    public Result deleteChat(@RequestBody Map<String, String> request){
         try{
             messageService.deleteChat(request.get("id"));
         }catch (Exception e){
             log.error("删除聊天失败", e);
-            return false;
+            return Result.error("删除聊天失败",false);
         }
-        return true;
+        return Result.success(true);
     }
 
     @PostMapping(value = "/loadDocument",produces = "text/plain;charset=UTF-8")

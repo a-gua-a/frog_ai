@@ -29,8 +29,8 @@ public class Result {
         return new Result(500, "操作失败", null);
     }
 
-    public static Result error(String message) {
-        return new Result(500, message, null);
+    public static Result error(String message ,Object data) {
+        return new Result(500, message, data);
     }
 
     public static Result error(Integer code, String message) {
