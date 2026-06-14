@@ -2,26 +2,29 @@ package cn.nuist.frog_ai.server.service.impl;
 
 import cn.nuist.frog_ai.pojo.vo.FileUploadVO;
 import cn.nuist.frog_ai.server.service.FileService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class FileServiceImpl implements FileService {
 
     private File getStorageDir() {
-        String resourcePath = this.getClass().getClassLoader().getResource("").getPath();
-        File storageDir = new File(resourcePath, "file");
+        String projectPath = System.getProperty("user.dir");
+        File storageDir = new File(projectPath, "src/main/resources/file");
         if (!storageDir.exists()) {
             storageDir.mkdirs();
         }
+        log.info("storageDir: {}", storageDir);
         return storageDir;
     }
 

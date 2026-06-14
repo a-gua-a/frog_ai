@@ -49,7 +49,7 @@ public class AIController {
     }
 
     @CrossOrigin
-    @PostMapping("/chatWithFile")
+    @PostMapping(value = "/chatWithFile",produces = "application/json;charset=UTF-8")
     public Result chatWithFile(@RequestBody FileChatDTO request) {
         String text = aiChatService.chatWithFile(request);
         return Result.success(text);
